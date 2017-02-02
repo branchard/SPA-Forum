@@ -14,8 +14,10 @@ use Carbon\Carbon;
 
 date_default_timezone_set('Europe/London');
 
-//accepting JSON
-$app->before(function (Request $request) {
+
+$app->before(function (Request $request) use ($app) {
+
+    // accepting JSON
     if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
         $data = json_decode($request->getContent(), true);
         $request->request->replace(is_array($data) ? $data : array());

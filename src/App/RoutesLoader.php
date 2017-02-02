@@ -3,6 +3,8 @@
 namespace App;
 
 use Silex\Application;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class RoutesLoader
 {
@@ -24,6 +26,10 @@ class RoutesLoader
         $this->app['root.controller'] = function() {
             return new Controllers\RootController($this->app);
         };
+
+        $this->app['user.controller'] = function() {
+            return new Controllers\UserController($this->app['user.service']);
+        };
     }
 
     public function bindRoutesToControllers()
@@ -33,6 +39,11 @@ class RoutesLoader
 
         /* REST API */
         $api = $this->app["controllers_factory"];
+
+        /* USER */
+        $api->get('/users', "user.controller:getAll")->before(function (Request $request, Application $app){
+            $this->app['auth.service']->restrict("ROLE_ADMIN");
+        });
 
         $api->get('/notes', "notes.controller:getAll");
         $api->get('/notes/{id}', "notes.controller:getOne");

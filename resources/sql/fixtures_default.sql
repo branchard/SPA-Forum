@@ -1,0 +1,2 @@
+INSERT INTO user
+  VALUES (NULL , 'admin', 'f2d81a260dea8a100dd517984e53c56a7523d96942a834b9cdc249bd4e8c7aa9', '0');

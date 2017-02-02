@@ -9,4 +9,5 @@ syteme dependencies :
 
 1. composer install
 2. Load sql schema
-3. composer run
+3. Load fictures
+4. composer run
