@@ -14,6 +14,8 @@ use Carbon\Carbon;
 
 date_default_timezone_set('Europe/London');
 
+// Run wepack watcher in background
+// shell_exec(ROOT_PATH . '/node_modules/.bin/webpack --config ' . ROOT_PATH . '/webpack.config.js');
 
 $app->before(function (Request $request) use ($app) {
 

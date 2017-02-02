@@ -10,4 +10,5 @@ syteme dependencies :
 1. composer install
 2. Load sql schema
 3. Load fictures
-4. composer run
+4. ./node_modules/.bin/webpack --config webpack.config.js --watch &
+5. composer run

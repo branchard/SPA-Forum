@@ -4,3 +4,4 @@ app/logs/*.log
 *~
 .idea
 app.db
+node_modules
