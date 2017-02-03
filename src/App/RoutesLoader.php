@@ -35,7 +35,7 @@ class RoutesLoader
     public function bindRoutesToControllers()
     {
         /* ROOT CONTROLLER */
-        $this->app->get("/", "root.controller:index");
+        $this->app->get("/{url}", "root.controller:index")->assert("url", ".*");;
 
         /* REST API */
         $api = $this->app["controllers_factory"];
