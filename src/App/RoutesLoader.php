@@ -34,23 +34,23 @@ class RoutesLoader
 
     public function bindRoutesToControllers()
     {
-        /* ROOT CONTROLLER */
-        $this->app->get("/{url}", "root.controller:index")->assert("url", ".*");;
-
         /* REST API */
         $api = $this->app["controllers_factory"];
 
         /* USER */
         $api->get('/users', "user.controller:getAll")->before(function (Request $request, Application $app){
-            $this->app['auth.service']->restrict("ROLE_ADMIN");
+            $this->app['auth.service']->restrict("ROLE_NONE");
         });
 
-        $api->get('/notes', "notes.controller:getAll");
-        $api->get('/notes/{id}', "notes.controller:getOne");
-        $api->post('/notes', "notes.controller:save");
-        $api->put('/notes/{id}', "notes.controller:update");
-        $api->delete('/notes/{id}', "notes.controller:delete");
+        $api->get('/toto', "notes.controller:getAll");
+        $api->get('/toto/{id}', "notes.controller:getOne");
+        $api->post('/toto', "notes.controller:save");
+        $api->put('/toto/{id}', "notes.controller:update");
+        $api->delete('/toto/{id}', "notes.controller:delete");
 
         $this->app->mount($this->app["api.endpoint"].'/'.$this->app["api.version"], $api);
+
+        /* ROOT CONTROLLER */
+        $this->app->get("/{url}", "root.controller:index")->assert("url", ".*");;
     }
 }
