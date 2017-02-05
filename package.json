@@ -20,13 +20,28 @@
   },
   "homepage": "https://github.com/branchard/SPA-Forum#readme",
   "dependencies": {
+    "axios": "^0.15.3",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "babel-preset-stage-2": "^6.22.0",
+    "css-loader": "^0.26.1",
+    "exports-loader": "^0.6.3",
+    "file-loader": "^0.10.0",
+    "imports-loader": "^0.7.0",
+    "less": "^2.7.2",
+    "less-loader": "^2.2.3",
+    "material-ui": "^0.16.7",
+    "normalize.css": "^5.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "react-router": "^3.0.2",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
     "webpack": "^1.14.0"
   }
 }

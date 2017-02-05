@@ -8,6 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 class AuthService extends BaseService
 {
 
+    /*
+        TODO: Il faudrait que le contructeur (de cette class), soit appelé au début
+        du cycle de vie de la requette utilisateur, cela permetterait de faire
+        un unique appel à la BDD et de stoker le role et le username dans les attribut
+        de cet objet
+    */
+
     private $rolesDict = array(
         0 => "ROLE_ADMIN",
         1 => "ROLE_MOD",
@@ -27,6 +34,12 @@ class AuthService extends BaseService
         return intval(array_keys($this->rolesDict, $role)[0]);
     }
 
+    // return sha-256 hash
+    private function passwordToHash(string $password)
+    {
+        return hash("sha256", $password);
+    }
+
     public function getRole()
     {
         if (!isset($_SERVER['PHP_AUTH_USER']))
@@ -36,7 +49,7 @@ class AuthService extends BaseService
         else
         {
             $username = $_SERVER['PHP_AUTH_USER'];
-            $password = $_SERVER['PHP_AUTH_PW'];
+            $password = $this->passwordToHash($_SERVER['PHP_AUTH_PW']);
             $roleInt = $this->db->fetchAssoc("SELECT role FROM user WHERE username=? AND password=?", [$username, $password])["role"];
             $this->app['monolog']->addDebug($roleInt);
             if(!isset($roleInt)){
@@ -75,6 +88,33 @@ class AuthService extends BaseService
         if(!$this->isGranted($minimumRole))
         {
             $this->app->abort(403, "You must have " . $minimumRole . " rights");
+        }
+    }
+
+    // By default, the administrator has access to everything
+    public function restricToUser(string $restricToUsername, $allowAccessToRole = "ROLE_ADMIN"){
+        // if user role is < $allowAccessToRole
+        if(!$this->isGranted($allowAccessToRole))
+        {
+            if (!isset($_SERVER['PHP_AUTH_USER']))
+            {
+                $this->app->abort(403, "You must be logged");
+            }
+            else
+            {
+                $username = $_SERVER['PHP_AUTH_USER'];
+                $password = $this->passwordToHash($_SERVER['PHP_AUTH_PW']);
+                $currentUsername = $this->db->fetchAssoc("SELECT username FROM user WHERE username=? AND password=?", [$username, $password])["username"];
+                if (!isset($currentUsername))
+                {
+                    $this->app->abort(403, "wrong password or username");
+                }
+
+                if($currentUsername !== $restricToUsername)
+                {
+                    $this->app->abort(403, "Access not granted to you (" . $currentUsername . ")");
+                }
+            }
         }
     }
 }

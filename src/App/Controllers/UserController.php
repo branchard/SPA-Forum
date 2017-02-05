@@ -16,6 +16,13 @@ class UserController
         $this->userService = $service;
     }
 
+    public function getOneByUsername(Request $request)
+    {
+        $username = $request->query->get('username');
+        $response = $this->userService->getOneByUsername($username);
+        return new JsonResponse($response["data"], $response["status"]);
+    }
+
     public function getOne($id)
     {
         return new JsonResponse($this->userService->getOne($id));

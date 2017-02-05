@@ -5,6 +5,17 @@ namespace App\Services;
 class UserService extends BaseService
 {
 
+    public function getOneByUsername($username)
+    {
+            $this->app['auth.service']->restricToUser($username);
+            $user = $this->db->fetchAssoc("SELECT iduser, username FROM user WHERE username=?", [(string) $username]);
+            $this->app['monolog']->addDebug($user);
+            if(!isset($user["iduser"])) {
+                return ["data" => "error", "status" => 404];
+            }
+            return ["data" => $user, "status" => 200];
+    }
+
     public function getOne($id)
     {
         return $this->db->fetchAssoc("SELECT * FROM user WHERE id=?", [(int) $id]);

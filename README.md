@@ -2,7 +2,7 @@
 A Single Page Application Forum
 
 syteme dependencies :
-- php > 5.5
+- php: > 5.5 && <= 7.0.14 (dont work with php 7.1.1)
 - mysql
 - composer
 - pdo_mysql

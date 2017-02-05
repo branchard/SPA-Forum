@@ -39,7 +39,16 @@ class RoutesLoader
 
         /* USER */
         $api->get('/users', "user.controller:getAll")->before(function (Request $request, Application $app){
-            $this->app['auth.service']->restrict("ROLE_NONE");
+            $this->app['auth.service']->restrict("ROLE_ADMIN");
+        });
+
+        $api->get('/user', "user.controller:getOneByUsername");
+
+        $api->post('/users', function(Request $request){
+            $user = $request->request->get("firstName");
+            return "$user";
+        })->before(function (Request $request, Application $app){
+            $this->app['auth.service']->restrict("ROLE_STANDARD");
         });
 
         $api->get('/toto', "notes.controller:getAll");

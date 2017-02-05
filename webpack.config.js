@@ -17,12 +17,7 @@ module.exports = {
     },
 
     plugins: [
-        //makes jQuery available in every module
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
-            'window.jQuery': 'jquery'
-        })
+
     ],
 
     module: {
@@ -33,7 +28,7 @@ module.exports = {
             exclude: /node_modules/
         }, {
             test: /\.css$/,
-            loader: ['style', 'css']
+            loaders: ['style', 'css']
         }, {
             test: /\.less$/,
             loaders: ['style', 'css', 'less']
