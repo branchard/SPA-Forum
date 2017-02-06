@@ -24,7 +24,7 @@ class Thread extends React.Component {
                         key={post.idpost}
                         leftAvatar={<Avatar src="http://www.material-ui.com/images/ok-128.jpg"/>}
                         primaryText={post.message}
-                        secondaryText={`Jack le ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}à ${date.getHours()}h${date.getMinutes()}m${date.getSeconds()}`}
+                        secondaryText={`Jack le ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} à ${date.getHours()}h${date.getMinutes()}`}
                         disabled={true}
                     />
                 )
