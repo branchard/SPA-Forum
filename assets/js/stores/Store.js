@@ -164,8 +164,8 @@ class Store {
 				that.pushObj({
 					isLogged: true,
 					username: response.data.username,
-					email: "toto@blabla.com", // TODO
-					photo: "http://www.material-ui.com/images/ok-128.jpg"
+					email: response.data.email,
+					photo: response.data.photo
 				});
 			},
 			callbackError: function(error){

@@ -12,6 +12,8 @@ CREATE TABLE user
      iduser   INT(5) auto_increment NOT NULL UNIQUE,
      username VARCHAR(30) NOT NULL UNIQUE,
      password VARCHAR(255) NOT NULL, /* sha-256 hash */
+     email    VARCHAR(255) NOT NULL,
+     photo    VARCHAR(255) NOT NULL,
      role     INT(2) NOT NULL DEFAULT 2, /* user privileges, 0 = admin, 1 = mod, 2 = normal */
      PRIMARY KEY (iduser)
   )
