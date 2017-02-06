@@ -8,7 +8,7 @@ class UserService extends BaseService
     public function getOneByUsername($username)
     {
             $this->app['auth.service']->restricToUser($username);
-            $user = $this->db->fetchAssoc("SELECT iduser, username, email, photo FROM user WHERE username=?", [(string) $username]);
+            $user = $this->db->fetchAssoc("SELECT iduser, username, email, photo, role FROM user WHERE username=?", [(string) $username]);
             $this->app['monolog']->addDebug($user);
             if(!isset($user["iduser"])) {
                 return ["data" => "error", "status" => 404];

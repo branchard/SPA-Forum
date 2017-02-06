@@ -72,6 +72,7 @@ class LeftMenuCard extends React.Component {
                         fullWidth={true}
                         value={this.state.usernameInputValue}
                         onChange={this.handleUsernameChange}
+                        onKeyPress={(e) => {e.key === 'Enter' ? this.handleConnection() : null}}
                     />
                     <TextField
                         floatingLabelText="Mot de passe"
@@ -85,6 +86,7 @@ class LeftMenuCard extends React.Component {
                         style={{marginBottom: "32px"}}
                         value={this.state.passwordInputValue}
                         onChange={this.handlePasswordChange}
+                        onKeyPress={(e) => {e.key === 'Enter' ? this.handleConnection() : null}}
                     />
                     <RaisedButton onTouchTap={this.handleConnection} label="Valider" fullWidth={true} />
                 </form>

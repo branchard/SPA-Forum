@@ -1,6 +1,9 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 
+import ThreadListContainer from "./ThreadListContainer";
+import ThreadContainer from "./ThreadContainer";
+
 const styles = {
     backgroundColor: "rgb(241, 241, 241)",
     minHeight: "100%",
@@ -24,17 +27,26 @@ class Content extends React.Component {
         //       <p key={thread.id}>{thread.title}</p>
         //   );
         // });
+        let content;
+
+        // if path category
+        if(this.props.params.categoryId){
+            content = (
+                <ThreadListContainer store={this.props.store} params={this.props.params} />
+            )
+        }
+
+        // if path thread
+        if(this.props.params.threadId){
+            content = (
+                <ThreadContainer store={this.props.store} params={this.props.params} />
+            )
+        }
 
         return (
             <div>
-                <Paper style={{margin: 10, padding: 16}} zDepth={1} >
-                    <p>test</p>
-                    <p>test</p>
-                    <p>test</p>
-                    <p>test</p>
-                    <p>test</p>
-                    <h3>{this.props.params.categoryName}</h3>
-                    <h4>{this.state.email}</h4>
+                <Paper style={{margin: 10}} zDepth={1} >
+                    {content}
                 </Paper>
             </div>
         );

@@ -26,6 +26,7 @@ class Store {
 		this.deconnectClient = this.deconnectClient.bind(this);
 		this.callRender = this.callRender.bind(this);
 		this.addStateListener = this.addStateListener.bind(this);
+		this.deleteStateListener = this.deleteStateListener.bind(this);
 		this.callApi = this.callApi.bind(this);
 	}
 
@@ -183,12 +184,78 @@ class Store {
 		});
 	}
 
+	getCategories(){
+		let that = this;
+		this.callApi({
+			method: "get",
+			url: "categories",
+			data: {
+			},
+			callbackSuccess: function(response){
+				that.push("categories", response.data)
+			},
+			callbackError: function(error){
+				console.log("fail get categories")
+			}
+		});
+	}
+
+	// if categoryId undefined, get all threads
+	getThreads(categoryId){
+		let that = this;
+
+		this.callApi({
+			method: "get",
+			url: `threads${categoryId ? `/${categoryId}` : ""}`,
+			data: {
+			},
+			callbackSuccess: function(response){
+				that.push("threads", response.data)
+			},
+			callbackError: function(error){
+				console.log("fail get threads")
+			}
+		});
+	}
+
+	// nedd threadId
+	getPosts(threadId){
+		if(threadId == "undefined"){
+			console.log("[Error] STORE ~ getPosts: you must give threadId parameter");
+			return;
+		}
+
+		let that = this;
+
+		this.callApi({
+			method: "get",
+			url: `posts/${threadId}`,
+			data: {
+			},
+			callbackSuccess: function(response){
+				that.push("posts", response.data)
+			},
+			callbackError: function(error){
+				console.log("fail get threads")
+			}
+		});
+	}
+
 	addStateListener(thatContext, setStateFunction, stateToListen) {
 		this.stateListeners.push({
 			setStateFunction: setStateFunction,
 			stateToListen: stateToListen,
 			thatContext: thatContext
 		});
+	}
+
+	deleteStateListener(thatContext, stateToListen) {
+		let that = this;
+		for(let i = this.stateListeners.length-1; i >= 0; i--) {
+		    if(that.stateListeners[i].stateToListen === stateToListen && that.stateListeners[i].thatContext === thatContext){
+				that.stateListeners.splice(i,1);
+			}
+		}
 	}
 
 	// call api with axios ajax lib
@@ -209,6 +276,10 @@ class Store {
 			method : obj.method,
 			url : `${API_URL}${obj.url}`,
 		};
+
+		if(!obj.auth){
+			obj.auth = {};
+		}
 
 		// if username and password defined
 		if((that.store.username || obj.auth.username) && (that.store.password || obj.auth.password)){

@@ -35,10 +35,11 @@ engine=innodb DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 CREATE TABLE post
   (
-     idpost   INT(6) auto_increment NOT NULL UNIQUE,
-     message  TEXT NOT NULL,
-     iduser   INT(5) NOT NULL,
-     idthread INT(6) NOT NULL,
+     idpost       INT(6) auto_increment NOT NULL UNIQUE,
+     message      TEXT NOT NULL,
+     iduser       INT(5) NOT NULL,
+     idthread     INT(6) NOT NULL,
+     creationdate DATETIME NOT NULL,
      PRIMARY KEY (idpost)
   )
 engine=innodb DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

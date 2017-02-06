@@ -30,6 +30,18 @@ class RoutesLoader
         $this->app['user.controller'] = function() {
             return new Controllers\UserController($this->app['user.service']);
         };
+
+        $this->app['category.controller'] = function() {
+            return new Controllers\CategoryController($this->app['category.service']);
+        };
+
+        $this->app['thread.controller'] = function() {
+            return new Controllers\ThreadController($this->app['thread.service']);
+        };
+
+        $this->app['post.controller'] = function() {
+            return new Controllers\PostController($this->app['post.service']);
+        };
     }
 
     public function bindRoutesToControllers()
@@ -50,6 +62,16 @@ class RoutesLoader
         })->before(function (Request $request, Application $app){
             $this->app['auth.service']->restrict("ROLE_STANDARD");
         });
+
+        /* CATEGORY */
+        $api->get('/categories', "category.controller:getAll");
+
+        /* THREAD */
+        $api->get('/threads', "thread.controller:getAll");
+        $api->get('/threads/{id}', "thread.controller:getByCategory");
+
+        /* POST */
+        $api->get('/posts/{threadId}', "post.controller:getAll");
 
         $api->get('/toto', "notes.controller:getAll");
         $api->get('/toto/{id}', "notes.controller:getOne");

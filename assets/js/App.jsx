@@ -16,7 +16,8 @@ class App extends React.Component {
         return (
             <Router history={browserHistory}>
                 <Route path="/" component={Page} store={this.store} />
-                <Route path="/category/:categoryName" component={Page} store={this.store} />
+                <Route path="/category/:categoryId" component={Page} store={this.store} />
+                <Route path="/thread/:threadId" component={Page} store={this.store} />
             </Router>
         );
     }

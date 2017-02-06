@@ -24,5 +24,17 @@ class ServicesLoader
         $this->app['user.service'] = function() {
             return new Services\UserService($this->app, $this->app["db"]);
         };
+
+        $this->app['category.service'] = function() {
+            return new Services\CategoryService($this->app, $this->app["db"]);
+        };
+
+        $this->app['thread.service'] = function() {
+            return new Services\ThreadService($this->app, $this->app["db"]);
+        };
+
+        $this->app['post.service'] = function() {
+            return new Services\PostService($this->app, $this->app["db"]);
+        };
     }
 }
