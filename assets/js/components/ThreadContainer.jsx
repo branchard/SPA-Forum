@@ -1,34 +1,32 @@
-import React from 'react';
+import React from "react";
 
-import Thread from './Thread';
+import Thread from "./Thread";
 
 class ThreadContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            posts: []
-        };
+	constructor(props) {
+		super(props);
+		this.state = {
+			posts: []
+		};
 
-    }
+	}
 
-    componentDidMount(){
-        this.props.store.addStateListener(this, this.setState, "posts");
-        this.props.store.getPosts(this.props.params.threadId);
-    }
+	componentDidMount() {
+		this.props.store.addStateListener(this, this.setState, "posts");
+		this.props.store.getPosts(this.props.params.threadId);
+	}
 
-    componentWillUnmount(){
-        this.props.store.deleteStateListener(this, "posts");
-    }
+	componentWillUnmount() {
+		this.props.store.deleteStateListener(this, "posts");
+	}
 
-    componentWillReceiveProps(nextProps) {
-        this.props.store.getPosts(nextProps.params.threadId);
-    }
+	componentWillReceiveProps(nextProps) {
+		this.props.store.getPosts(nextProps.params.threadId);
+	}
 
-    render() {
-        return (
-            <Thread {...this.props} posts={this.state.posts} />
-        );
-    }
+	render() {
+		return (<Thread {...this.props} posts={this.state.posts}/>);
+	}
 }
 
 export default ThreadContainer;

@@ -64,7 +64,7 @@ class Store {
 		// 	this.push(key, stateObj[key]);
 		// }
 
-		console.log(`PUSHOBJ -> stateObj: `);
+		console.log("PUSHOBJ -> stateObj:");
 		console.log(stateObj);
 
 		/*
@@ -77,7 +77,7 @@ class Store {
 				}
 			]
 		*/
-		let haveToNotify = []
+		let haveToNotify = [];
 
 		let that = this;
 		for(let key in stateObj){
@@ -118,7 +118,7 @@ class Store {
 	}
 
 	pull(state) {
-		let value = this.store[state]
+		let value = this.store[state];
 		console.log(`PULL -> state: ${state}, value: ${this.store[state]}`);
 		return value;
 	}
@@ -169,8 +169,8 @@ class Store {
 					photo: response.data.photo
 				});
 			},
-			callbackError: function(error){
-				console.log("fail connect")
+			callbackError: function(){
+				console.log("fail connect");
 			}
 		});
 	}
@@ -192,10 +192,10 @@ class Store {
 			data: {
 			},
 			callbackSuccess: function(response){
-				that.push("categories", response.data)
+				that.push("categories", response.data);
 			},
-			callbackError: function(error){
-				console.log("fail get categories")
+			callbackError: function(){
+				console.log("fail get categories");
 			}
 		});
 	}
@@ -210,10 +210,10 @@ class Store {
 			data: {
 			},
 			callbackSuccess: function(response){
-				that.push("threads", response.data)
+				that.push("threads", response.data);
 			},
-			callbackError: function(error){
-				console.log("fail get threads")
+			callbackError: function(){
+				console.log("fail get threads");
 			}
 		});
 	}
@@ -233,10 +233,10 @@ class Store {
 			data: {
 			},
 			callbackSuccess: function(response){
-				that.push("posts", response.data)
+				that.push("posts", response.data);
 			},
-			callbackError: function(error){
-				console.log("fail get threads")
+			callbackError: function(){
+				console.log("fail get threads");
 			}
 		});
 	}
@@ -251,8 +251,11 @@ class Store {
 
 	deleteStateListener(thatContext, stateToListen) {
 		let that = this;
-		for(let i = this.stateListeners.length-1; i >= 0; i--) {
-		    if(that.stateListeners[i].stateToListen === stateToListen && that.stateListeners[i].thatContext === thatContext){
+		for(let i = this.stateListeners.length - 1; i >= 0; i--) {
+			if(
+				that.stateListeners[i].stateToListen === stateToListen &&
+				that.stateListeners[i].thatContext === thatContext
+			){
 				that.stateListeners.splice(i,1);
 			}
 		}
@@ -295,25 +298,25 @@ class Store {
 			requestObj["data"] = obj.data;
 		}
 
-        axios(requestObj).then(function(response){
+		axios(requestObj).then(function(response){
 			// good
 			console.log("api call: success");
-        	console.log(response);
+			console.log(response);
 
 			// if callbackSuccess defined
 			if(obj.callbackSuccess) {
 				obj.callbackSuccess(response);
 			}
-        }).catch(function(error) {
+		}).catch(function(error) {
 			// wrong
 			console.log("api call: error");
-        	console.log(error);
+			console.log(error);
 
 			// if callbackError defined
 			if(obj.callbackError) {
 				obj.callbackError(error);
 			}
-        });
+		});
 	}
 }
 
