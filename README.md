@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/branchard/SPA-Forum.svg?branch=master)](https://travis-ci.org/branchard/SPA-Forum)
+
 # SPA-Forum
 A Single Page Application Forum
 
