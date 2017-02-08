@@ -66,7 +66,7 @@ class LeftMenu extends React.Component {
 
 		return (
 			<div>
-				<Drawer docked={false} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
+				<Drawer containerStyle={{overflow: "hidden"}} docked={false} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
 					<LeftMenuCard store={this.props.store}/> {categoryList}
 				</Drawer>
 			</div>
