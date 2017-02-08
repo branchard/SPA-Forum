@@ -1,4 +1,10 @@
 engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+      - php
   eslint:
     enabled: true
     channel: "eslint-3"
