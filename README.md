@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/branchard/SPA-Forum.svg?branch=master)](https://travis-ci.org/branchard/SPA-Forum)
+[![Dependency Status](https://www.versioneye.com/user/projects/589a8c16475a4f003e6362eb/badge.svg?style=flat)](https://www.versioneye.com/user/projects/589a8c16475a4f003e6362eb)
 
 # SPA-Forum
 A Single Page Application Forum
