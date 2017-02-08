@@ -47,7 +47,7 @@ class Content extends React.Component {
 		}
 
 		if (this.state.thread && this.state.currentlyViewing === "thread") {
-			content = (<Thread thread={this.state.thread}/>);
+			content = (<Thread thread={this.state.thread} store={this.props.store}/>);
 			title = this.state.thread.title;
 			this.props.store.pull("categories").forEach(function(category){
 				if(category.idcategory === that.state.thread.idcategory){
@@ -60,10 +60,12 @@ class Content extends React.Component {
 
 		return (
 			<div>
-				<Paper style={{
-					margin: 10
-				}} zDepth={1}>
-					<Toolbar store={this.props.store} linkTo={linkTo} linkTitle={linkTitle} title={title}/> {content}
+				<Paper
+					style={{margin: 10}}
+					zDepth={1}
+				>
+					<Toolbar store={this.props.store} linkTo={linkTo} linkTitle={linkTitle} title={title}/>
+					{content}
 				</Paper>
 			</div>
 		);

@@ -13,7 +13,9 @@ class Header extends React.Component {
 		return (
 			<header>
 				<AppBar title="React forum example" onLeftIconButtonTouchTap={() => this.refs.leftMenu.handleToogle()}/>
-				<LeftMenu store={this.props.store} ref="leftMenu"/>
+				<nav>
+					<LeftMenu store={this.props.store} ref="leftMenu"/>
+				</nav>
 			</header>
 		);
 	}

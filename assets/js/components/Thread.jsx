@@ -1,14 +1,24 @@
 import React from "react";
 
 import {List, ListItem} from "material-ui/List";
-import Subheader from "material-ui/Subheader";
 import Avatar from "material-ui/Avatar";
+
+import PostEditor from "./PostEditor";
 
 class Thread extends React.Component {
 	constructor(props) {
 		super(props);
-
+		this.state = {
+		};
 		this.renderPosts = this.renderPosts.bind(this);
+	}
+
+	componentDidMount() {
+		this.props.store.addStateListener(this, this.setState, "isLogged");
+	}
+
+	componentWillUnmount() {
+		this.props.store.deleteStateListener(this, "isLogged");
 	}
 
 	renderPosts() {
@@ -33,11 +43,19 @@ class Thread extends React.Component {
 	}
 
 	render() {
+		let postEditor;
+		if(this.state.isLogged){
+			postEditor = (
+				<PostEditor />
+			);
+		}
+
 		return (
 			<div>
 				<List>
 					{this.renderPosts()}
 				</List>
+				{postEditor}
 			</div>
 		);
 	}
