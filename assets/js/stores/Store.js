@@ -237,6 +237,12 @@ class Store {
 			stateToListen: stateToListen,
 			thatContext: thatContext
 		});
+		if(this.store[stateToListen]){
+			let stateObj = {}; // obj to pass to setState function
+			stateObj[stateToListen] = this.store[stateToListen];
+			// call set good context
+			setStateFunction.call(thatContext, stateObj);
+		}
 	}
 
 	deleteStateListener(thatContext, stateToListen) {
