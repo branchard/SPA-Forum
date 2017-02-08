@@ -2,9 +2,16 @@ language: php
 
 php:
   - 5.5
+  - 7.0
 
 env:
  - APP_ENV=dev
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 before_script:
   - wget http://getcomposer.org/composer.phar
