@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const API_URL = "/api/v1/";
 
@@ -33,6 +34,14 @@ class Store {
 		this.addStateListener = this.addStateListener.bind(this);
 		this.deleteStateListener = this.deleteStateListener.bind(this);
 		this.callApi = this.callApi.bind(this);
+
+
+		let username = Cookies.get("username");
+		let password = Cookies.get("_password");
+
+		if(username && password){
+			this.connectClient(username, password);
+		}
 	}
 
 	callRender() {
@@ -138,6 +147,7 @@ class Store {
 	}
 
 	connectClient(username, password) {
+		console.log(`Connection client: ${username}:${password}`);
 		let that = this;
 		this.callApi({
 			method: "get",
@@ -156,9 +166,16 @@ class Store {
 					email: response.data.email,
 					photo: response.data.photo
 				});
+
+				// expire in 40 days
+				Cookies.set("username", username, { expires: 40 });
+				Cookies.set("_password", password, { expires: 40 });
 			},
 			callbackError: function(){
 				console.log("fail connect");
+
+				Cookies.remove("username");
+				Cookies.remove("_password");
 			}
 		});
 	}
@@ -170,6 +187,9 @@ class Store {
 			email: undefined,
 			photo: undefined
 		});
+
+		Cookies.remove("username");
+		Cookies.remove("_password");
 	}
 
 	getCategories(){
