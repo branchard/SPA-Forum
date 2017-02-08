@@ -4,9 +4,7 @@ import Cookies from "js-cookie";
 const API_URL = "/api/v1/";
 
 class Store {
-	constructor(render) {
-		this.render = render;
-
+	constructor() {
 		this.stateListeners = [
 			/*{
 				setStateFunction: {},
@@ -30,22 +28,19 @@ class Store {
 		this.pull = this.pull.bind(this);
 		this.connectClient = this.connectClient.bind(this);
 		this.deconnectClient = this.deconnectClient.bind(this);
-		this.callRender = this.callRender.bind(this);
 		this.addStateListener = this.addStateListener.bind(this);
 		this.deleteStateListener = this.deleteStateListener.bind(this);
 		this.callApi = this.callApi.bind(this);
+		this.handleCookiesConnection = this.handleCookiesConnection.bind(this);
+	}
 
-
+	handleCookiesConnection(){
 		let username = Cookies.get("username");
 		let password = Cookies.get("_password");
 
 		if(username && password){
 			this.connectClient(username, password);
 		}
-	}
-
-	callRender() {
-		this.render();
 	}
 
 	/*

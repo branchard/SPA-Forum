@@ -7,7 +7,11 @@ import Page from "./components/Page";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.store = new Store(this.render);
+		this.store = new Store();
+	}
+
+	componentDidMount(){
+		this.store.handleCookiesConnection();
 	}
 
 	render() {
