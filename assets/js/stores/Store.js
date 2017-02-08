@@ -98,29 +98,32 @@ class Store {
 			//this.push(key, stateObj[key]);
 			that.store[state] = value;
 
-			// push Componets to notify
+			// push Components to notify
 			this.stateListeners.forEach(function(listener){
-				let haveToCreateNew = true;
-				haveToNotify.forEach(function(obj){
-					if(obj.thatContext == listener.thatContext){
-						haveToCreateNew = false;
-						obj.newState[state] = value;
-					}
-				});
-
-				if(haveToCreateNew) {
-					let newState = {};
-					newState[state] = value;
-					haveToNotify.push({
-						thatContext: listener.thatContext,
-						setStateFunction: listener.setStateFunction,
-						newState: newState
+				if(listener.stateToListen === state){
+					let haveToCreateNew = true;
+					haveToNotify.forEach(function(obj){
+						if(obj.thatContext == listener.thatContext){
+							haveToCreateNew = false;
+							obj.newState[state] = value;
+						}
 					});
+
+					if(haveToCreateNew) {
+						let newState = {};
+						newState[state] = value;
+						haveToNotify.push({
+							thatContext: listener.thatContext,
+							setStateFunction: listener.setStateFunction,
+							newState: newState
+						});
+					}
 				}
 			});
 		}
 
-
+		console.log("Haaaave to notify ----");
+		console.log(haveToNotify);
 		/* Notify listerner once per Component */
 		haveToNotify.forEach(function(obj){
 			// call set good context
@@ -135,32 +138,6 @@ class Store {
 	}
 
 	connectClient(username, password) {
-		// console.log(username + password);
-		/*let that = this;
-        axios({
-			method : 'get',
-			url : '/api/v1/user',
-			auth : {
-				username: username,
-				password: password
-			},
-			params : {
-				username: username
-			}
-        }).then(function(response) {
-			// good
-        	console.log(response);
-			//that.push("isLogged", true);
-			that.pushObj({
-				isLogged: true,
-				username: response.data.username,
-				email: "toto@blabla.com", // TODO
-				photo: "http://www.material-ui.com/images/ok-128.jpg"
-			});
-        }).catch(function(error) {
-			// wrong
-        	console.log(error);
-        });*/
 		let that = this;
 		this.callApi({
 			method: "get",
@@ -250,29 +227,6 @@ class Store {
 			},
 			callbackError: function(){
 				console.log("fail get thread");
-			}
-		});
-	}
-
-	// need threadId
-	getPosts(threadId){
-		if(threadId == "undefined"){
-			console.log("[Error] STORE ~ getPosts: you must give threadId parameter");
-			return;
-		}
-
-		let that = this;
-
-		this.callApi({
-			method: "get",
-			url: `posts/${threadId}`,
-			data: {
-			},
-			callbackSuccess: function(response){
-				that.push("posts", response.data);
-			},
-			callbackError: function(){
-				console.log("fail get threads");
 			}
 		});
 	}
