@@ -69,6 +69,7 @@ class RoutesLoader
         /* THREAD */
         $api->get('/threads', "thread.controller:getAll");
         $api->get('/threads/{id}', "thread.controller:getByCategory");
+		$api->get('/thread/{id}', "thread.controller:getOneById");
 
         /* POST */
         $api->get('/posts/{threadId}', "post.controller:getAll");

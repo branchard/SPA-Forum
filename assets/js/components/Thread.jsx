@@ -13,10 +13,9 @@ class Thread extends React.Component {
 
 	renderPosts() {
 		let postList = [];
-		if(this.props.posts){
-			this.props.posts.forEach(function(post){
+		if(this.props.thread.posts){
+			this.props.thread.posts.forEach(function(post){
 				let date = new Date(post.creationdate);
-				console.log(date);
 				postList.push(
 					<ListItem
 						key={post.idpost}
@@ -37,7 +36,6 @@ class Thread extends React.Component {
 		return (
 			<div>
 				<List>
-					<Subheader>Titre du thread</Subheader>
 					{this.renderPosts()}
 				</List>
 			</div>

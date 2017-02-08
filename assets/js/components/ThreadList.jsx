@@ -14,8 +14,7 @@ class ThreadList extends React.Component {
 
 	renderThreads() {
 		let threadList = [];
-		if (this.props.threads) {
-			console.log(this.props.threads);
+		if (this.props.threads && this.props.threads.length !== 0) {
 			this.props.threads.forEach(function(thread) {
 				threadList.push(
 					<Link key={thread.idthread} to={`/thread/${thread.idthread}`}>
@@ -29,6 +28,14 @@ class ThreadList extends React.Component {
 					</Link>
 				);
 			});
+		}else{
+			threadList.push(
+				<ListItem
+					key={1}
+					primaryText="Il n'y a pas de discutions à afficher."
+					secondaryText=":/"
+				/>
+			);
 		}
 		return threadList;
 	}

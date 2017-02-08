@@ -16,7 +16,12 @@ class Store {
 		/* store contain states */
 		this.store = {
 			/* "myState": "myValue" */
-			isLogged: false
+			isLogged: false,
+			categories: [],
+			threads: [],
+			thread: [], // selected thread
+			currentlyViewing: undefined
+
 		};
 
 		this.push = this.push.bind(this);
@@ -50,6 +55,12 @@ class Store {
 				listener.setStateFunction.call(listener.thatContext, stateObj);
 			}
 		});
+	}
+
+	delete(state) {
+		if(this.store[state]){
+			delete this.store[state];
+		}
 	}
 
 	// push multiple state
@@ -211,6 +222,7 @@ class Store {
 			},
 			callbackSuccess: function(response){
 				that.push("threads", response.data);
+				that.push("currentlyViewing", "threads");
 			},
 			callbackError: function(){
 				console.log("fail get threads");
@@ -218,7 +230,31 @@ class Store {
 		});
 	}
 
-	// nedd threadId
+	// nedd threadId // get one thread
+	getThread(threadId){
+		if(threadId == "undefined"){
+			console.log("[Error] STORE ~ getThread: you must give threadId parameter");
+			return;
+		}
+
+		let that = this;
+
+		this.callApi({
+			method: "get",
+			url: `thread/${threadId}`,
+			data: {
+			},
+			callbackSuccess: function(response){
+				that.push("thread", response.data);
+				that.push("currentlyViewing", "thread");
+			},
+			callbackError: function(){
+				console.log("fail get thread");
+			}
+		});
+	}
+
+	// need threadId
 	getPosts(threadId){
 		if(threadId == "undefined"){
 			console.log("[Error] STORE ~ getPosts: you must give threadId parameter");

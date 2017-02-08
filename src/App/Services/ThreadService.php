@@ -19,5 +19,13 @@ class ThreadService extends BaseService
         return $threads;
     }
 
+	public function getOneById($id)
+    {
+        $thread = $this->db->fetchAssoc("SELECT * FROM thread WHERE idthread=?", [(string) $id]);
+		$posts = $this->db->fetchAll("SELECT * FROM post WHERE idthread=?", [(string) $id]);
+		$thread["posts"] = $posts;
+        return $thread;
+    }
+
 
 }

@@ -25,4 +25,9 @@ class ThreadController
     {
         return new JsonResponse($this->threadService->getByCategory($id));
     }
+
+	public function getOneById($id)
+    {
+        return new JsonResponse($this->threadService->getOneById($id));
+    }
 }

@@ -12,29 +12,13 @@ class Toolbar extends React.Component {
 		this.state = {};
 	}
 
-	componentDidMount() {
-		this.props.store.addStateListener(this, this.setState, "selectedThread");
-	}
-
-	componentWillUnmount() {
-		this.props.store.deleteStateListener(this, "selectedThread");
-	}
-
 	render() {
-		let title;
-
-		if (this.state.selectedThread) {
-			if (this.state.selectedThread.title) {
-				title = this.state.selectedThread.title;
-			}
-		}
-
 		return (
 			<_Toolbar>
 				<ToolbarGroup firstChild={true}>
-					<Link to={"/category/1"}>
+					<Link to={this.props.linkTo}>
 						<FlatButton
-							label="Retour à la catégorie"
+							label={this.props.linkTitle || "Retour"}
 							icon={< ChevronLeft />}
 							style={{
 								top: "-1px",
@@ -50,7 +34,7 @@ class Toolbar extends React.Component {
 					</Link>
 				</ToolbarGroup>
 				<ToolbarGroup>
-					<ToolbarTitle text={title}/>
+					<ToolbarTitle text={this.props.title}/>
 				</ToolbarGroup>
 			</_Toolbar>
 		);

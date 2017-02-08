@@ -53,7 +53,6 @@ class LeftMenuCard extends React.Component {
 	}
 
 	renderConnectionForm() {
-		console.log("left menu card render/ is logged: " + this.state.isLogged);
 		return (
 			<div>
 				<CardTitle style={{

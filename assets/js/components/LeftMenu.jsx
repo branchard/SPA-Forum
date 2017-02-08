@@ -19,8 +19,6 @@ class LeftMenu extends React.Component {
 
 		this.props.store.addStateListener(this, this.setState, "categories");
 
-		this.props.store.getCategories();
-
 		this.handleToogle = this.handleToogle.bind(this);
 		this.handleClose = this.handleClose.bind(this);
 		this.renderCategories = this.renderCategories.bind(this);
