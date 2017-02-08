@@ -33,6 +33,10 @@
         "process-timeout": 0
     },
 	"scripts": {
+		"test": [
+			"echo 'Run test'",
+			"vendor/bin/phpunit"
+		],
         "run": [
             "echo 'Started web server on http://localhost:8000'",
             "php -S localhost:8000 -t web/"

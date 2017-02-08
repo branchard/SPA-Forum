@@ -20,7 +20,7 @@ class NotesServiceTest extends \PHPUnit_Framework_TestCase
                 "memory" => true
             ),
         ));
-        $this->noteService = new NotesService($app["db"]);
+        $this->noteService = new NotesService($app, $app["db"]);
 
         $stmt = $app["db"]->prepare("CREATE TABLE notes (id INTEGER PRIMARY KEY AUTOINCREMENT,note VARCHAR NOT NULL)");
         $stmt->execute();
