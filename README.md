@@ -5,14 +5,30 @@
 # SPA-Forum
 A Single Page Application Forum
 
-syteme dependencies :
+System dependencies (not exhaustive)
+------------------------------------
 - php: > 5.5 && <= 7.0.14 (dont work with php 7.1.1)
 - mysql
 - composer
-- pdo_mysql
+- pdo_mysql php driver
+- pdo_sqlite php driver (for tests)
 
-1. composer install
-2. Load sql schema
-3. Load fictures
-4. ./node_modules/.bin/webpack --config webpack.config.js --watch &
-5. composer run
+How to run the projects
+-----------------------
+1. Clone the project
+2. Go into the projet directory : `$ cd SPA-Forum/`
+3. Install PHP dependencies: `$ composer install`
+4. Install Node dependencies: `$ npm install`
+5. Load SQL schema: `(mysql) source ./resources/sql/schema.sql`
+6. Load default fixtures: `(mysql) source ./resources/sql/fixtures_default.sql`
+7. Load extra fixtures: `(mysql) source ./resources/sql/fixtures_extra.sql`
+8. Pack the js with webpack : `$ ./node_modules/.bin/webpack --config webpack.config.js`
+9. Run the projet: `$ composer run`
+10. Open [127.0.0.1:8000](http://127.0.0.1:8000/) in your favorite browser.
+
+TODO
+----
+- unit tests
+- js strore refactoring
+- better auth system
+- user registration system
