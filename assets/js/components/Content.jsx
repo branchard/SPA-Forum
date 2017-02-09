@@ -1,7 +1,11 @@
 import React from "react";
+
 import Paper from "material-ui/Paper";
+import IconButton from "material-ui/IconButton";
+import AddIcon from "material-ui/svg-icons/content/add-circle";
 
 import Toolbar from "./Toolbar";
+import CategoryList from "./CategoryList";
 import ThreadList from "./ThreadList";
 import Thread from "./Thread";
 
@@ -15,12 +19,16 @@ class Content extends React.Component {
 	componentDidMount() {
 		this.props.store.addStateListener(this, this.setState, "threads");
 		this.props.store.addStateListener(this, this.setState, "thread");
+		this.props.store.addStateListener(this, this.setState, "isLogged");
+		this.props.store.addStateListener(this, this.setState, "username");
 		this.props.store.addStateListener(this, this.setState, "currentlyViewing");
 	}
 
 	componentWillUnmount() {
 		this.props.store.deleteStateListener(this, "threads");
 		this.props.store.deleteStateListener(this, "thread");
+		this.props.store.deleteStateListener(this, this.setState, "isLogged");
+		this.props.store.deleteStateListener(this, this.setState, "username");
 		this.props.store.addStateListener(this, this.setState, "currentlyViewing");
 	}
 
@@ -31,6 +39,7 @@ class Content extends React.Component {
 		let title;
 		let linkTitle;
 		let linkTo;
+		let rightMenu;
 
 		if (this.state.threads && this.state.currentlyViewing === "threads") {
 			content = (<ThreadList threads={this.state.threads}/>);
@@ -44,6 +53,16 @@ class Content extends React.Component {
 				});
 			}
 			linkTo = "/";
+
+			if(this.state.isLogged){
+				rightMenu = (
+					<IconButton
+						tooltip="Créer une nouvelle discution"
+					>
+						<AddIcon color="rgba(0, 0, 0, 0.4)" />
+					</IconButton>
+				);
+			}
 		}
 
 		if (this.state.thread && this.state.currentlyViewing === "thread") {
@@ -58,13 +77,21 @@ class Content extends React.Component {
 			linkTo = `/category/${this.state.thread.idcategory}`;
 		}
 
+		if(this.state.currentlyViewing === "home"){
+			content = (<CategoryList store={this.props.store}/>);
+			title = "Liste des categories";
+		}
+
 		return (
 			<div>
-				<Paper
-					style={{margin: 10}}
-					zDepth={1}
-				>
-					<Toolbar store={this.props.store} linkTo={linkTo} linkTitle={linkTitle} title={title}/>
+				<Paper style={{margin: 10}} zDepth={1} >
+					<Toolbar
+						store={this.props.store}
+						linkTo={linkTo}
+						linkTitle={linkTitle}
+						title={title}
+						rightMenu={rightMenu}
+					/>
 					{content}
 				</Paper>
 			</div>

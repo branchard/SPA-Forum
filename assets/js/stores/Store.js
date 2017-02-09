@@ -166,7 +166,7 @@ class Store {
 
 				// expire in 40 days
 				Cookies.set("username", username, { expires: 40 });
-				Cookies.set("_password", password, { expires: 40 });
+				Cookies.set("_password", password, { expires: 40 }); // TODO: Use temporary key stored on server
 			},
 			callbackError: function(){
 				console.log("fail connect");

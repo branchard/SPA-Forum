@@ -13,12 +13,13 @@ class Toolbar extends React.Component {
 	}
 
 	render() {
-		return (
-			<_Toolbar>
+		let leftGroup;
+		if(this.props.linkTo && this.props.linkTitle){
+			leftGroup = (
 				<ToolbarGroup firstChild={true}>
 					<Link to={this.props.linkTo}>
 						<FlatButton
-							label={this.props.linkTitle || "Retour"}
+							label={this.props.linkTitle}
 							icon={< ChevronLeft />}
 							style={{
 								top: "-1px",
@@ -33,8 +34,15 @@ class Toolbar extends React.Component {
 						/>
 					</Link>
 				</ToolbarGroup>
+			);
+		}
+
+		return (
+			<_Toolbar>
+				{leftGroup}
 				<ToolbarGroup>
 					<ToolbarTitle text={this.props.title}/>
+					{this.props.rightMenu}
 				</ToolbarGroup>
 			</_Toolbar>
 		);
