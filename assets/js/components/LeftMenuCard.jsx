@@ -22,18 +22,28 @@ class LeftMenuCard extends React.Component {
 			passwordInputValue: ""
 		};
 
-		this.props.store.addStateListener(this, this.setState, "isLogged");
-		this.props.store.addStateListener(this, this.setState, "connectionFail");
-		this.props.store.addStateListener(this, this.setState, "username");
-		this.props.store.addStateListener(this, this.setState, "email");
-		this.props.store.addStateListener(this, this.setState, "photo");
-
 		this.handleConnection = this.handleConnection.bind(this);
 		this.handleDeconnection = this.handleDeconnection.bind(this);
 		this.renderConnectionForm = this.renderConnectionForm.bind(this);
 		this.renderCardHeader = this.renderCardHeader.bind(this);
 		this.handleUsernameChange = this.handleUsernameChange.bind(this);
 		this.handlePasswordChange = this.handlePasswordChange.bind(this);
+	}
+
+	componentDidMount() {
+		this.props.store.addStateListener(this, this.setState, "isLogged");
+		this.props.store.addStateListener(this, this.setState, "connectionFail");
+		this.props.store.addStateListener(this, this.setState, "username");
+		this.props.store.addStateListener(this, this.setState, "email");
+		this.props.store.addStateListener(this, this.setState, "photo");
+	}
+
+	componentWillUnmount() {
+		this.props.store.deleteStateListener(this, this.setState, "isLogged");
+		this.props.store.deleteStateListener(this, this.setState, "connectionFail");
+		this.props.store.deleteStateListener(this, this.setState, "username");
+		this.props.store.deleteStateListener(this, this.setState, "email");
+		this.props.store.deleteStateListener(this, this.setState, "photo");
 	}
 
 	handleConnection() {

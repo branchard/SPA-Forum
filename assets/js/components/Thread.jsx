@@ -10,6 +10,7 @@ class Thread extends React.Component {
 		super(props);
 		this.state = {
 		};
+
 		this.renderPosts = this.renderPosts.bind(this);
 	}
 
@@ -29,10 +30,10 @@ class Thread extends React.Component {
 				postList.push(
 					<ListItem
 						key={post.idpost}
-						leftAvatar={<Avatar src="http://www.material-ui.com/images/ok-128.jpg"/>}
+						leftAvatar={<Avatar src={post.user.photo}/>}
 						primaryText={post.message}
 						secondaryText={
-							`Jack le ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} à ${date.getHours()}h${date.getMinutes()}`
+							`${post.user.username} le ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} à ${date.getHours()}h${date.getMinutes()}`
 						}
 						disabled={true}
 					/>
@@ -46,7 +47,7 @@ class Thread extends React.Component {
 		let postEditor;
 		if(this.state.isLogged){
 			postEditor = (
-				<PostEditor />
+				<PostEditor threadId={this.props.thread.idthread} store={this.props.store} />
 			);
 		}
 

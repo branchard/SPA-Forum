@@ -30,4 +30,12 @@ class ThreadController
     {
         return new JsonResponse($this->threadService->getOneById($id));
     }
+
+	public function add(Request $request)
+    {
+		$categoryId = $request->get("categoryId");
+		$title = $request->get("title");
+		$message = $request->get("message");
+        return new JsonResponse($this->threadService->add($categoryId, $title, $message));
+    }
 }

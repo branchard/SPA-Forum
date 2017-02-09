@@ -70,9 +70,15 @@ class RoutesLoader
         $api->get('/threads', "thread.controller:getAll");
         $api->get('/threads/{id}', "thread.controller:getByCategory");
 		$api->get('/thread/{id}', "thread.controller:getOneById");
+		$api->post('/thread', "thread.controller:add")->before(function (Request $request, Application $app){
+	        $this->app['auth.service']->restrict("ROLE_STANDARD");// must be connected
+	    });
 
         /* POST */
         $api->get('/posts/{threadId}', "post.controller:getAll");
+		$api->post('/post', "post.controller:add")->before(function (Request $request, Application $app){
+	        $this->app['auth.service']->restrict("ROLE_STANDARD");// must be connected
+	    });
 
         $api->get('/toto', "notes.controller:getAll");
         $api->get('/toto/{id}', "notes.controller:getOne");

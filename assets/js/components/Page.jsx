@@ -19,16 +19,21 @@ class Page extends React.Component {
 	}
 
 	updatingStore() {
-		if(this.props.params.categoryId){
-			this.props.route.store.getThreads(this.props.params.categoryId);
-		}else if(this.props.params.threadId){
+		// if no 404
+		if(this.props.routes[0].path !== "*"){
+			if(this.props.params.categoryId){
+				this.props.route.store.getThreads(this.props.params.categoryId);
+			}else if(this.props.params.threadId){
 
-			// prevent previous posts displaying
-			this.props.route.store.push("thread", []);
+				// prevent previous posts displaying
+				this.props.route.store.push("thread", []);
 
-			this.props.route.store.getThread(this.props.params.threadId);
+				this.props.route.store.getThread(this.props.params.threadId);
+			}else{
+				this.props.route.store.push("currentlyViewing", "home");
+			}
 		}else{
-			this.props.route.store.push("currentlyViewing", "home");
+			this.props.route.store.push("currentlyViewing", "404");
 		}
 	}
 

@@ -77,19 +77,31 @@ class AuthService extends BaseService
         }
 
         $role = $this->getRole();
+		error_log($role);
         if($role === "ROLE_NONE"){
             return false;
         }
 
+
+
         return $this->roleStringToNumber($role) <= $this->roleStringToNumber($minimumRole);
     }
 
-    public function restrict(string $minimumRole){
+    public function restrict(string $minimumRole)
+	{
         if(!$this->isGranted($minimumRole))
         {
             $this->app->abort(403, "You must have " . $minimumRole . " rights");
         }
     }
+
+	public function getUserId()
+	{
+		$username = $_SERVER['PHP_AUTH_USER'];
+		$password = $this->passwordToHash($_SERVER['PHP_AUTH_PW']);
+		$userId = $this->db->fetchAssoc("SELECT iduser FROM user WHERE username=? AND password=?", [$username, $password])["iduser"];
+		return $userId;
+	}
 
     // By default, the administrator has access to everything
     public function restricToUser(string $restricToUsername, $allowAccessToRole = "ROLE_ADMIN"){

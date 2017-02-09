@@ -31,6 +31,8 @@ class Store {
 		this.deconnectClient = this.deconnectClient.bind(this);
 		this.addStateListener = this.addStateListener.bind(this);
 		this.deleteStateListener = this.deleteStateListener.bind(this);
+		this.sendThread = this.sendThread.bind(this);
+		this.sendPost = this.sendPost.bind(this);
 		this.callApi = this.callApi.bind(this);
 		this.handleCookiesConnection = this.handleCookiesConnection.bind(this);
 	}
@@ -127,8 +129,6 @@ class Store {
 			});
 		}
 
-		console.log("Haaaave to notify ----");
-		console.log(haveToNotify);
 		/* Notify listerner once per Component */
 		haveToNotify.forEach(function(obj){
 			// call set good context
@@ -138,7 +138,7 @@ class Store {
 
 	pull(state) {
 		let value = this.store[state];
-		console.log(`PULL -> state: ${state}, value: ${this.store[state]}`);
+		console.log(`PULL -> state: ${state}, value: ${value}`);
 		return value;
 	}
 
@@ -160,6 +160,7 @@ class Store {
 					isLogged: true,
 					connectionFail: false,
 					username: response.data.username,
+					password: password, // TODO: response.data.authKey
 					email: response.data.email,
 					photo: response.data.photo
 				});
@@ -280,6 +281,76 @@ class Store {
 				that.stateListeners.splice(i,1);
 			}
 		}
+	}
+
+	sendThread(categoryId, title, message){
+		console.log("sendThread");
+		console.log(categoryId);
+		if(categoryId == "undefined"){
+			console.log("[Error] STORE ~ sendThread: you must give categoryId parameter");
+			return;
+		}
+
+		if(title == "undefined"){
+			console.log("[Error] STORE ~ sendThread: you must give title parameter");
+			return;
+		}
+
+		if(message == "undefined"){
+			console.log("[Error] STORE ~ sendThread: you must give message parameter");
+			return;
+		}
+
+		let that = this;
+
+		this.callApi({
+			method: "post",
+			url: "thread",
+			data: {
+				categoryId: categoryId,
+				title: title,
+				message: message
+			},
+			callbackSuccess: function(){
+				console.log("send thread success");
+
+				// updating thread list
+				that.getThreads(categoryId);
+			},
+			callbackError: function(){
+				console.log("fail to send thread");
+			}
+		});
+	}
+
+	sendPost(threadId, message){
+		if(threadId == "undefined"){
+			console.log("[Error] STORE ~ sendPost: you must give threadId parameter");
+			return;
+		}
+
+		if(message == "undefined"){
+			console.log("[Error] STORE ~ sendPost: you must give message parameter");
+			return;
+		}
+
+		let that = this;
+
+		this.callApi({
+			method: "post",
+			url: "post",
+			data: {
+				threadId: threadId,
+				message: message
+			},
+			callbackSuccess: function(){
+				console.log("send to post success");
+				that.getThread(threadId);
+			},
+			callbackError: function(){
+				console.log("fail to send post");
+			}
+		});
 	}
 
 	// call api with axios ajax lib

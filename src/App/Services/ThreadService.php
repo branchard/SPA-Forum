@@ -23,9 +23,35 @@ class ThreadService extends BaseService
     {
         $thread = $this->db->fetchAssoc("SELECT * FROM thread WHERE idthread=?", [(string) $id]);
 		$posts = $this->db->fetchAll("SELECT * FROM post WHERE idthread=?", [(string) $id]);
+		foreach ($posts as $key => $value){
+            $posts[$key]['user'] = $this->db->fetchAssoc(
+				"SELECT username, photo FROM user WHERE iduser=?", [(string) $posts[$key]["iduser"]]
+			);
+        }
 		$thread["posts"] = $posts;
         return $thread;
     }
 
+	public function add($categoryId, $title, $message)
+	{
+		$userId = $this->app['auth.service']->getUserId();
+		if(!isset($userId)){
+			$this->app->abort(403, "You are not able to post this message");
+		}
 
+		$this->db->insert("thread", array(
+			"title" => $title,
+			"iduser" => $userId,
+			"idcategory" => $categoryId
+        ));
+
+		$this->db->insert("post", array(
+			"message" => $message,
+			"iduser" => $userId,
+			"idthread" => $this->db->lastInsertId(),
+			"creationdate" => date("Y-m-d H:i:s")
+        ));
+
+        return $this->db->lastInsertId();
+	}
 }

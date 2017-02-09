@@ -32,7 +32,7 @@ class ThreadList extends React.Component {
 			threadList.push(
 				<ListItem
 					key={1}
-					primaryText="Il n'y a pas de discutions à afficher."
+					primaryText="Il n'y a pas de discussions à afficher."
 					secondaryText=":/"
 				/>
 			);
@@ -44,7 +44,6 @@ class ThreadList extends React.Component {
 		return (
 			<div>
 				<List>
-					<Subheader>List des discutions</Subheader>
 					{this.renderThreads()}
 				</List>
 			</div>

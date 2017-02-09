@@ -30,6 +30,12 @@ class CategoryList extends React.Component {
 		let subheader;
 		if(this.state.categories){
 			this.state.categories.forEach(function(category) {
+				let dateText = "Pas de messages";
+				if(category.lastPostDate){
+					let date = new Date(category.lastPostDate);
+					dateText = `Dernier message: le ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} à ${date.getHours()}h${date.getMinutes()}`;
+				}
+
 				categoryList.push(
 					<Link key={category.idcategory} to={`/category/${category.idcategory}`}>
 						<ListItem
@@ -37,7 +43,7 @@ class CategoryList extends React.Component {
 							leftAvatar={< Avatar icon={< FileFolder />} />}
 							rightIcon={< ActionInfo />}
 							primaryText={category.label}
-							secondaryText="Jan 28, 2014"/>
+							secondaryText={dateText}/>
 					</Link>
 				);
 			});

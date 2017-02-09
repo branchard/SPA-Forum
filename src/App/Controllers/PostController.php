@@ -19,4 +19,11 @@ class PostController
     {
         return new JsonResponse($this->postService->getAll($threadId));
     }
+
+	public function add(Request $request)
+    {
+		$message = $request->get("message");
+		$threadId = $request->get("threadId");
+        return new JsonResponse($this->postService->add($threadId, $message));
+    }
 }
