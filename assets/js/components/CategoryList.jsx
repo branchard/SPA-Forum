@@ -6,7 +6,6 @@ import {Link} from "react-router";
 import Divider from "material-ui/Divider";
 import Avatar from "material-ui/Avatar";
 import FileFolder from "material-ui/svg-icons/file/folder";
-import ActionInfo from "material-ui/svg-icons/action/info";
 
 class CategoryList extends React.Component {
 	constructor(props) {
@@ -41,7 +40,6 @@ class CategoryList extends React.Component {
 						<ListItem
 							key={category.idcategory}
 							leftAvatar={< Avatar icon={< FileFolder />} />}
-							rightIcon={< ActionInfo />}
 							primaryText={category.label}
 							secondaryText={dateText}/>
 					</Link>
