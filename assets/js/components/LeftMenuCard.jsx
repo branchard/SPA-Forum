@@ -23,6 +23,7 @@ class LeftMenuCard extends React.Component {
 		};
 
 		this.props.store.addStateListener(this, this.setState, "isLogged");
+		this.props.store.addStateListener(this, this.setState, "connectionFail");
 		this.props.store.addStateListener(this, this.setState, "username");
 		this.props.store.addStateListener(this, this.setState, "email");
 		this.props.store.addStateListener(this, this.setState, "photo");
@@ -53,6 +54,11 @@ class LeftMenuCard extends React.Component {
 	}
 
 	renderConnectionForm() {
+		let errorText;
+		if(this.state.connectionFail){
+			errorText = "Pseudo ou mot de passe incorrect";
+		}
+
 		return (
 			<div>
 				<CardTitle style={{
@@ -65,6 +71,7 @@ class LeftMenuCard extends React.Component {
 				}}>
 					<TextField
 						floatingLabelText="Pseudo"
+						errorText={errorText}
 						type="text"
 						floatingLabelStyle={styles.text}
 						floatingLabelFocusStyle={styles.text}

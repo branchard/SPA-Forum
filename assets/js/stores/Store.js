@@ -16,6 +16,7 @@ class Store {
 		this.store = {
 			/* "myState": "myValue" */
 			isLogged: false,
+			connectionFail: false,
 			categories: [],
 			threads: [],
 			thread: [], // selected thread
@@ -157,6 +158,7 @@ class Store {
 			callbackSuccess: function(response){
 				that.pushObj({
 					isLogged: true,
+					connectionFail: false,
 					username: response.data.username,
 					email: response.data.email,
 					photo: response.data.photo
@@ -168,6 +170,14 @@ class Store {
 			},
 			callbackError: function(){
 				console.log("fail connect");
+
+				that.pushObj({
+					isLogged: false,
+					connectionFail: true,
+					username: undefined,
+					email: undefined,
+					photo: undefined
+				});
 
 				Cookies.remove("username");
 				Cookies.remove("_password");
