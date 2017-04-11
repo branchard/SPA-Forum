@@ -32,3 +32,4 @@ TODO
 - js strore refactoring
 - better auth system
 - user registration system
+- update npm packages
