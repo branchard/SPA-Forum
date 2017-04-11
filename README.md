@@ -28,6 +28,8 @@ How to run the projects
 
 TODO
 ----
+- env file (with database informations)
+- prod env
 - unit tests
 - js strore refactoring
 - better auth system
