@@ -35,3 +35,4 @@ TODO
 - better auth system
 - user registration system
 - update npm packages
+- use doctrine
