@@ -22,7 +22,7 @@ How to run the projects
 5. Load SQL schema: `(mysql) source ./resources/sql/schema.sql`
 6. Load default fixtures: `(mysql) source ./resources/sql/fixtures_default.sql`
 7. Load extra fixtures: `(mysql) source ./resources/sql/fixtures_extra.sql`
-8. Pack the js with webpack : `$ ./node_modules/.bin/webpack --config webpack.config.js`
+8. Bundle the js with webpack : `$ ./node_modules/.bin/webpack --config webpack.config.js`
 9. Run the projet: `$ composer run`
 10. Open [127.0.0.1:8000](http://127.0.0.1:8000/) in your favorite browser.
 
